@@ -576,31 +576,31 @@ function App() {
             <article className="hero-copy">
               <div className="hero-copy__main">
                 <h1 className="hero-title">
-                  {locale === 'en'
-                    ? (
-                        <>
-                          Aspiring software, systems,
-                          <br />
-                          and cloud engineer building
-                          <br />
-                          practical, user-centered applications.
-                        </>
-                      )
-                    : (
-                        <>
-                          사용자 문제를 실제 서비스로
-                          <br />
-                          해결하는 AI·시스템·<span className="nowrap">소프트웨어</span>
-                          <br />
-                          엔지니어로 성장하고자 합니다.
-                        </>
-                      )}
-                </h1>
-                <p className="hero-summary">
-                  {locale === 'en'
-                    ? 'I build practical products end-to-end, from ideas and data to API design, deployment, and user-facing delivery.'
-                    : '아이디어를 실제 서비스로 구현하는 전 과정을 경험하며, 데이터와 API, 배포와 사용자 전달까지 이어지는 완성도 높은 제품을 만드는 데 집중합니다.'}
-                </p>
+                {locale === 'en'
+                  ? (
+                      <>
+                        Building AI, systems, and software
+                        <br />
+                        that turn real user problems
+                        <br />
+                        into real-world solutions.
+                      </>
+                    )
+                  : (
+                      <>
+                        사용자 문제를 실제 서비스로
+                        <br />
+                        해결하는 AI·시스템·<span className="nowrap">소프트웨어</span>
+                        <br />
+                        엔지니어로 성장하고자 합니다.
+                      </>
+                    )}
+              </h1>
+              <p className="hero-summary">
+                {locale === 'en'
+                  ? 'I focus on taking ideas from concept to production—designing, building, and deploying end-to-end systems that deliver real value to users through data, APIs, and scalable infrastructure.'
+                  : '아이디어를 실제 서비스로 구현하는 전 과정을 경험하며, 데이터와 API, 배포와 사용자 전달까지 이어지는 완성도 높은 제품을 만드는 데 집중합니다.'}
+              </p>
 
                 <div className="profile-list profile-list--hero">
                   {profileItems.map((item) => {
