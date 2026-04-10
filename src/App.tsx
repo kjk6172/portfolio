@@ -486,8 +486,8 @@ function App() {
     document.documentElement.lang = locale
     document.title =
       locale === 'en'
-        ? 'Kiseong Kim | Backend Developer'
-        : '김기성 | 백엔드 개발자 포트폴리오'
+        ? 'Kiseong Kim Portfolio'
+        : '김기성 포트폴리오'
   }, [locale])
 
   useEffect(() => {
@@ -524,9 +524,13 @@ function App() {
   return (
     <div className="app-shell">
       <header className="site-header">
-        <a className="brand" href="#overview" aria-label="Kiseong Kim home">
+        <a
+          className="brand"
+          href="#overview"
+          aria-label={locale === 'en' ? 'Kiseong Kim home' : '김기성 홈'}
+        >
           <span className="brand__dot" aria-hidden="true" />
-          <span className="brand__name">Kiseong Kim</span>
+          <span className="brand__name">{locale === 'en' ? 'Kiseong Kim' : '김기성'}</span>
         </a>
 
         <nav className="site-nav" aria-label="Primary navigation">
