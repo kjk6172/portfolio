@@ -2,6 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import profilePhoto from '../Kim_Kiseong_Photo.jpeg'
 import resumePdf from '../Kiseong Kim Resume.pdf'
+import ploLogo from '../logo/PLO_logo.png'
+import avtLogo from '../logo/AVT_logo.jpg'
+import tagoLogo from '../logo/TAGO_logo.png'
+import aidLogo from '../logo/AID_logo.png'
+import cucoLogo from '../logo/CUCO_logo.png'
 
 type Locale = 'ko' | 'en'
 type TabId = 'overview' | 'projects' | 'stack'
@@ -45,7 +50,8 @@ const profileItems: Array<{
 const projectTimeline = [
   {
     id: '01',
-    logoText: 'PLO / PSU',
+    logoSrc: ploLogo,
+    logoAlt: 'PLO logo',
     title: copy(
       'Natural Language Prompt-Based AI Drone Control System',
       '자연어 프롬프트 기반 AI 드론 제어 시스템 개발',
@@ -90,7 +96,8 @@ const projectTimeline = [
   },
   {
     id: '02',
-    logoText: 'AVT',
+    logoSrc: avtLogo,
+    logoAlt: 'AVT logo',
     title: copy(
       'HD Map Path Generation and CI/CD Automation for Autonomous Vehicles',
       '자율주행 차량 HD Map 기반 경로 생성 및 CI/CD 자동화 시스템 개발',
@@ -133,7 +140,8 @@ const projectTimeline = [
   },
   {
     id: '03',
-    logoText: 'TAGO',
+    logoSrc: tagoLogo,
+    logoAlt: 'TAGO logo',
     title: copy(
       'TAGO Airport Shuttle - Campus Ride Matching Platform',
       'TAGO Airport Shuttle - 캠퍼스 택시 매칭 플랫폼 개발',
@@ -175,14 +183,15 @@ const projectTimeline = [
   },
   {
     id: '04',
-    logoText: 'UG',
+    logoSrc: cucoLogo,
+    logoAlt: 'CUCO logo',
     title: copy(
       'UniGuide AI - University Information AI Chatbot',
       'UniGuide AI - 대학 정보 AI 챗봇 개발',
     ),
     organization: copy(
-      'People Link One (PLO) / Pennsylvania State University',
-      'People Link One (PLO) / Pennsylvania State University',
+      'CUCO LLC / People Link One (PLO)',
+      'CUCO LLC / People Link One (PLO)',
     ),
     period: copy('Jan 2025 — Dec 2025', '2025.01 — 2025.12'),
     description: copy(
@@ -222,7 +231,8 @@ const projectTimeline = [
   },
   {
     id: '05',
-    logoText: 'AID',
+    logoSrc: aidLogo,
+    logoAlt: 'AID logo',
     title: copy(
       'AID - AI-Generated Content Verification Website',
       'AID - AI 생성 콘텐츠 검증 웹사이트 개발',
@@ -708,8 +718,13 @@ function App() {
             {projectTimeline.map((project) => (
               <article className="timeline-project" key={project.id}>
                 <div className="timeline-project__rail">
-                  <div className="timeline-project__logo-slot" aria-label="Logo placeholder">
-                    {project.logoText}
+                  <div className="timeline-project__logo-slot">
+                    <img
+                      className="timeline-project__logo-image"
+                      src={project.logoSrc}
+                      alt={project.logoAlt}
+                      loading="lazy"
+                    />
                   </div>
                   <span className="timeline-project__dot" aria-hidden="true" />
                 </div>

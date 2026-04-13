@@ -544,6 +544,13 @@ button {
   padding: 8px;
 }
 
+.timeline-project__logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
 .timeline-project__dot {
   width: 13px;
   height: 13px;
