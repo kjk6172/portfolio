@@ -37,6 +37,12 @@ button {
   padding: 18px 0 56px;
 }
 
+@media (min-width: 1400px) {
+  .app-shell {
+    zoom: 0.9;
+  }
+}
+
 .site-header {
   position: sticky;
   top: 14px;
