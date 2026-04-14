@@ -11,6 +11,11 @@ import cucoLogo from '../logo/CUCO_logo.png'
 type Locale = 'ko' | 'en'
 type TabId = 'overview' | 'projects' | 'stack'
 type LocalizedText = Record<Locale, string>
+type ProjectDeliverable = {
+  label: LocalizedText
+  url?: string
+  note?: LocalizedText
+}
 
 const copy = (en: string, ko: string): LocalizedText => ({ en, ko })
 
@@ -93,6 +98,12 @@ const projectTimeline = [
         'AI 연산과 텔레메트리 통신을 결합한 드론 제어 프로토타입 개발',
       ],
     },
+    deliverables: [
+      {
+        label: copy('GitHub Repository', 'GitHub 저장소'),
+        url: 'https://github.com/kjk6172/drone',
+      },
+    ] as ProjectDeliverable[],
   },
   {
     id: '02',
@@ -137,6 +148,7 @@ const projectTimeline = [
         '자율주행 소프트웨어 개발 프로세스 자동화 환경 구축',
       ],
     },
+    deliverables: [] as ProjectDeliverable[],
   },
   {
     id: '03',
@@ -180,6 +192,23 @@ const projectTimeline = [
         '지역 택시 업체와 제휴 논의 진행을 통해 서비스 상용화 기반 마련',
       ],
     },
+    deliverables: [
+      {
+        label: copy('User App (App Store)', '유저 앱 (App Store)'),
+        url: 'https://apps.apple.com/us/app/tago-airport-shuttle/id6755057592',
+      },
+      {
+        label: copy('Driver App (App Store)', '드라이버 앱 (App Store)'),
+        url: 'https://apps.apple.com/us/app/tago-airport-shuttle-driver/id6755074138',
+      },
+      {
+        label: copy('App Store Search', '앱스토어 검색'),
+        note: copy(
+          'Search for "TAGO Airport Shuttle" in the App Store',
+          '앱스토어에서 "TAGO Airport Shuttle" 검색',
+        ),
+      },
+    ] as ProjectDeliverable[],
   },
   {
     id: '04',
@@ -203,14 +232,12 @@ const projectTimeline = [
         'Crawled Penn State website data and built a Q/A dataset',
         'Fine-tuned a Phi-3 based LLM and cleaned training data',
         'Developed the FastAPI chatbot backend server',
-        'Deployed inference services on AWS EC2 using Docker',
         'Integrated RAG and served as AI/ML engineering lead',
       ],
       ko: [
         'Penn State 웹사이트 데이터 크롤링 및 Q/A 데이터셋 구축',
         'Phi-3 기반 LLM 파인튜닝 수행 및 학습 데이터 정제',
         'FastAPI 기반 챗봇 백엔드 서버 개발',
-        'AWS EC2 및 Docker 기반 추론 서버 배포',
         'RAG 시스템 연동 및 AI/ML 엔지니어링 리드 역할 수행',
       ],
     },
@@ -219,15 +246,19 @@ const projectTimeline = [
         'Collected about 57,000 webpages and generated 200,000 Q/A pairs',
         'Built a high-quality training dataset of 90,000 entries',
         'Implemented an AI chatbot for university information Q&A',
-        'Deployed an AI API server on AWS EC2',
       ],
       ko: [
         '약 57,000개 웹페이지 수집 및 200,000개 Q/A 데이터 생성',
         '90,000개 고품질 학습 데이터셋 구축',
         '대학 정보 질의응답이 가능한 AI 챗봇 구현',
-        'AWS EC2 기반 서비스형 AI API 서버 구축',
       ],
     },
+    deliverables: [
+      {
+        label: copy('GitHub Repository', 'GitHub 저장소'),
+        url: 'https://github.com/kjk6172/UniGuide',
+      },
+    ] as ProjectDeliverable[],
   },
   {
     id: '05',
@@ -246,14 +277,14 @@ const projectTimeline = [
     roles: {
       en: [
         'Built the website with React.js and TypeScript',
-        'Deployed the web service on AWS',
+        'Deployed the web service on AWS (S3, DynamoDB, etc.)',
         'Integrated external AI-detection APIs for image, video, and audio verification',
         'Designed the upload and result interface for users',
         'Collaborated with teammates to develop the service end-to-end',
       ],
       ko: [
         'React.js와 TypeScript 기반 웹사이트 개발',
-        'AWS 환경을 활용한 웹 서비스 배포',
+        'AWS 환경을 활용한 웹 서비스 배포 (S3, DynamoDB 등)',
         '외부 AI 판별 API 연동을 통한 이미지·영상·음원 검증 기능 구현',
         '사용자 업로드 및 결과 확인을 위한 UI 설계 및 인터페이스 개발',
         '팀 프로젝트 환경에서 협업을 통한 웹 서비스 개발 수행',
@@ -271,6 +302,12 @@ const projectTimeline = [
         '이미지·영상·음원 업로드 및 분석 기능 개발',
       ],
     },
+    deliverables: [
+      {
+        label: copy('Live Website', '배포 사이트'),
+        url: 'https://aid-proto.vercel.app/',
+      },
+    ] as ProjectDeliverable[],
   },
 ]
 
@@ -759,6 +796,42 @@ function App() {
                       </ul>
                     </section>
                   </div>
+
+                  {project.deliverables.length > 0 ? (
+                    <section className="timeline-project__deliverables">
+                      <h4>{locale === 'en' ? 'Project Results' : '프로젝트 결과물'}</h4>
+                      <ul className="timeline-project__deliverable-list">
+                        {project.deliverables.map((item, index) => (
+                          <li key={`${project.id}-${item.label.en}-${index}`}>
+                            {item.url ? (
+                              <a
+                                className="timeline-project__deliverable-link"
+                                href={item.url}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                              >
+                                <span className="timeline-project__deliverable-name">
+                                  {t(item.label)}
+                                </span>
+                                <span className="timeline-project__deliverable-url">
+                                  {item.url.replace(/^https?:\/\//, '')}
+                                </span>
+                              </a>
+                            ) : (
+                              <div className="timeline-project__deliverable-note">
+                                <span className="timeline-project__deliverable-name">
+                                  {t(item.label)}
+                                </span>
+                                <span className="timeline-project__deliverable-text">
+                                  {item.note ? t(item.note) : ''}
+                                </span>
+                              </div>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ) : null}
                 </div>
               </article>
             ))}
