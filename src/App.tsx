@@ -405,6 +405,7 @@ const stackGroups = [
         'Dataset (Q/A pair generation)',
         'RAG',
         'Ollama (local LLM)',
+        'ComfyUI',
         'Apple MLX / MPS',
       ],
       ko: [
@@ -422,6 +423,7 @@ const stackGroups = [
         '데이터셋 (Q/A pair 생성)',
         'RAG',
         'Ollama (로컬 LLM)',
+        'ComfyUI',
         'Apple MLX / MPS',
       ],
     },
