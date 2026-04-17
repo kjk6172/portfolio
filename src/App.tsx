@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import profilePhoto from '../Kim_Kiseong_Photo.jpeg'
 import resumePdf from '../Kiseong Kim Resume.pdf'
+import resumePdfKo from '../김기성 이력서.pdf'
 import ploLogo from '../logo/PLO_logo.png'
 import avtLogo from '../logo/AVT_logo.jpg'
 import tagoLogo from '../logo/TAGO_logo.png'
@@ -524,6 +525,25 @@ function App() {
   const stackSectionRef = useRef<HTMLElement | null>(null)
 
   const t = (value: LocalizedText) => value[locale]
+  const resumeCards: Array<{
+    href: string
+    downloadName: string
+    title: LocalizedText
+    previewTitle: string
+  }> = [
+    {
+      href: resumePdf,
+      downloadName: 'Kiseong_Kim_Resume_EN.pdf',
+      title: copy('English Resume PDF', '영문 이력서 PDF'),
+      previewTitle: 'Kiseong Kim English resume preview',
+    },
+    {
+      href: resumePdfKo,
+      downloadName: 'Kiseong_Kim_Resume_KO.pdf',
+      title: copy('Korean Resume PDF', '국문 이력서 PDF'),
+      previewTitle: 'Kiseong Kim Korean resume preview',
+    },
+  ]
 
   const getSectionElement = (tabId: TabId) => {
     if (tabId === 'overview') {
@@ -725,17 +745,21 @@ function App() {
                 </div>
               </div>
 
-              <div className="hero-resume-card">
-                <a className="resume-link" href={resumePdf} download="Kiseong_Kim_Resume.pdf">
-                  {locale === 'en' ? 'Download Resume PDF' : '이력서 PDF 다운로드'}
-                </a>
-                <div className="resume-preview-frame">
-                  <iframe
-                    src={`${resumePdf}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH`}
-                    title="Kiseong Kim resume preview (hero)"
-                    loading="lazy"
-                  />
-                </div>
+              <div className="hero-resume-stack">
+                {resumeCards.map((resume) => (
+                  <div className="hero-resume-card" key={resume.downloadName}>
+                    <a className="resume-link" href={resume.href} download={resume.downloadName}>
+                      {t(resume.title)}
+                    </a>
+                    <div className="resume-preview-frame">
+                      <iframe
+                        src={`${resume.href}#toolbar=0&navpanes=0&scrollbar=0&page=1&view=FitH`}
+                        title={resume.previewTitle}
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </article>
           </div>
