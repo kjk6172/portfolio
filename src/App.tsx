@@ -2,28 +2,114 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import profilePhoto from '../Kim_Kiseong_Photo.jpeg'
 import resumePdf from '../Kiseong Kim Resume.pdf'
-import resumePdfKo from '../김기성 이력서.pdf'
 import ploLogo from '../logo/PLO_logo.png'
 import avtLogo from '../logo/AVT_logo.jpg'
 import tagoLogo from '../logo/TAGO_logo.png'
 import aidLogo from '../logo/AID_logo.png'
 import cucoLogo from '../logo/CUCO_logo.png'
+import fasooLogo from '../logo/Fasoo-AI.png'
+import airForceLogo from '../logo/Republic_of_Korea_Air_Force_emblem.png'
 
 type Locale = 'ko' | 'en'
-type TabId = 'overview' | 'projects' | 'stack'
+type TabId = 'overview' | 'experience' | 'projects' | 'stack'
 type LocalizedText = Record<Locale, string>
 type ProjectDeliverable = {
   label: LocalizedText
   url?: string
   note?: LocalizedText
 }
+type TimelineEntry = {
+  id: string
+  logoSrc: string
+  logoAlt: string
+  title: LocalizedText
+  organization: LocalizedText
+  period: LocalizedText
+  location?: LocalizedText
+  description: LocalizedText
+  roles: { en: string[]; ko: string[] }
+  rolesLabel?: LocalizedText
+  outcomes?: { en: string[]; ko: string[] }
+  deliverables: ProjectDeliverable[]
+}
 
 const copy = (en: string, ko: string): LocalizedText => ({ en, ko })
 
 const navigation: Array<{ id: TabId; label: LocalizedText }> = [
   { id: 'overview', label: copy('Overview', '개요') },
+  { id: 'experience', label: copy('Experience', '경험') },
   { id: 'projects', label: copy('Projects', '프로젝트') },
   { id: 'stack', label: copy('Stack', '스택') },
+]
+
+const experienceTimeline: TimelineEntry[] = [
+  {
+    id: 'exp-01',
+    logoSrc: fasooLogo,
+    logoAlt: 'Fasoo AI logo',
+    title: copy(
+      'Software Engineer Intern',
+      '소프트웨어 개발자 인턴',
+    ),
+    organization: copy('Fasoo AI', 'Fasoo AI'),
+    period: copy('Jun 2026 — Aug 2026 (Ongoing)', '2026.06 — 2026.08 (진행 중)'),
+    description: copy(
+      'Building a pipeline that extracts design data from Figma via MCP and auto-generates a Flutter component library, so design changes flow straight into every Fasoo AI product—essentially a design-system CI/CD.',
+      'Figma에서 MCP로 디자인 데이터를 추출해 Flutter 컴포넌트 라이브러리를 자동 생성하고, 변경된 디자인이 Fasoo AI 전 제품에 바로 반영되도록 하는 파이프라인을 구축하고 있습니다. 사실상 디자인 시스템 CI/CD입니다.',
+    ),
+    roles: {
+      en: [
+        'Extract design data from Figma via MCP and structure it into a protocol of design tokens, component specs, and a rulebook',
+        'Auto-generate Flutter component code from the protocol and publish it to the shared component library',
+        'Build a trigger-based pipeline that runs on Figma library publish—automating extraction → code generation → library release (design-system CI/CD)',
+      ],
+      ko: [
+        'Figma에서 MCP로 디자인 데이터를 추출해 토큰 정의·컴포넌트 명세서·룰북으로 분리한 프로토콜 구성',
+        '프로토콜 기반으로 Flutter 컴포넌트 코드를 자동 생성하고 공용 컴포넌트 라이브러리에 자동 반영',
+        '디자이너의 Figma 라이브러리 게시 시 작동하는 트리거 파이프라인 구축 (데이터 추출 → 코드 자동 생성 → 라이브러리 배포 자동화, 디자인 시스템 CI/CD)',
+      ],
+    },
+    outcomes: {
+      en: [
+        'In progress — building the end-to-end automation from Figma design to a live Flutter component library consumed across all Fasoo AI products',
+      ],
+      ko: [
+        '진행 중 — Figma 디자인부터 Flutter 컴포넌트 라이브러리까지 이어지는 자동화 파이프라인을 구축하고 있으며, Fasoo AI 전 제품이 이를 가져다 사용하도록 연동',
+      ],
+    },
+    deliverables: [],
+  },
+  {
+    id: 'exp-02',
+    logoSrc: airForceLogo,
+    logoAlt: 'Republic of Korea Air Force emblem',
+    title: copy(
+      'Aircraft Hydraulic & Electric Systems Engineer',
+      '항공유압전기정비',
+    ),
+    organization: copy(
+      'Republic of Korea Air Force',
+      '대한민국 공군',
+    ),
+    period: copy('Sep 2022 — Jun 2024', '2022.09 — 2024.06'),
+    location: copy('Jinju, South Korea', '대한민국 진주'),
+    description: copy(
+      'Completed mandatory military service as a Sergeant and squad leader, maintaining aircraft hydraulic and electrical systems in a safety-critical operational environment.',
+      '병장(분대장)으로 만기 전역했으며, 안전이 최우선인 운용 환경에서 항공기 유압·전기 계통 정비를 담당했습니다.',
+    ),
+    rolesLabel: copy('Responsibilities', '주요 임무'),
+    roles: {
+      en: [
+        'Performed troubleshooting and maintenance support for aircraft hydraulic and electrical systems in a safety-critical operational environment.',
+        'Coordinated daily readiness tasks as squad leader for 20+ personnel while following strict documentation, safety, and inspection procedures.',
+      ],
+      ko: [
+        '안전이 최우선인 운용 환경에서 항공기 유압·전기 계통의 결함 진단 및 정비 지원 수행',
+        '분대장으로서 20명 이상 인원의 일일 전비태세 업무를 관리하며 엄격한 문서화·안전·점검 절차 준수',
+      ],
+    },
+    deliverables: [],
+  },
 ]
 
 const profileItems: Array<{
@@ -53,7 +139,7 @@ const profileItems: Array<{
   },
 ]
 
-const projectTimeline = [
+const projectTimeline: TimelineEntry[] = [
   {
     id: '01',
     logoSrc: ploLogo,
@@ -510,17 +596,11 @@ const stackGroups = [
   },
 ]
 
-const militaryService = {
-  title: copy('Military Service', '군복무'),
-  branch: copy('Republic of Korea Air Force', '대한민국 공군'),
-  detail: copy('Sergeant, completed mandatory service', '병장 만기제대'),
-  period: '2022.09 — 2024.06',
-}
-
 function App() {
   const [locale, setLocale] = useState<Locale>('en')
   const [activeTab, setActiveTab] = useState<TabId>('overview')
   const overviewSectionRef = useRef<HTMLElement | null>(null)
+  const experienceSectionRef = useRef<HTMLElement | null>(null)
   const projectsSectionRef = useRef<HTMLElement | null>(null)
   const stackSectionRef = useRef<HTMLElement | null>(null)
 
@@ -537,17 +617,15 @@ function App() {
       title: copy('English Resume PDF', '영문 이력서 PDF'),
       previewTitle: 'Kiseong Kim English resume preview',
     },
-    {
-      href: resumePdfKo,
-      downloadName: 'Kiseong_Kim_Resume_KO.pdf',
-      title: copy('Korean Resume PDF', '국문 이력서 PDF'),
-      previewTitle: 'Kiseong Kim Korean resume preview',
-    },
   ]
 
   const getSectionElement = (tabId: TabId) => {
     if (tabId === 'overview') {
       return overviewSectionRef.current
+    }
+
+    if (tabId === 'experience') {
+      return experienceSectionRef.current
     }
 
     if (tabId === 'projects') {
@@ -556,6 +634,105 @@ function App() {
 
     return stackSectionRef.current
   }
+
+  const renderTimelineItem = (item: TimelineEntry) => (
+    <article className="timeline-project" key={item.id}>
+      <div className="timeline-project__rail">
+        <div className="timeline-project__logo-slot">
+          <img
+            className="timeline-project__logo-image"
+            src={item.logoSrc}
+            alt={item.logoAlt}
+            loading="lazy"
+          />
+        </div>
+        <span className="timeline-project__dot" aria-hidden="true" />
+      </div>
+
+      <div className="timeline-project__body">
+        <div className="timeline-project__meta">
+          <div>
+            <p className="timeline-project__org">{t(item.organization)}</p>
+            <h3>{t(item.title)}</h3>
+            {item.location ? (
+              <p className="timeline-project__location">{t(item.location)}</p>
+            ) : null}
+          </div>
+          <p className="timeline-project__period">{t(item.period)}</p>
+        </div>
+
+        <p className="timeline-project__description">{t(item.description)}</p>
+
+        <div
+          className={`timeline-project__sections ${
+            item.outcomes ? '' : 'timeline-project__sections--single'
+          }`}
+        >
+          <section className="timeline-project__section">
+            <h4>
+              {item.rolesLabel
+                ? t(item.rolesLabel)
+                : locale === 'en'
+                  ? 'Key Roles'
+                  : '주요 역할'}
+            </h4>
+            <ul>
+              {item.roles[locale].map((role) => (
+                <li key={role}>{role}</li>
+              ))}
+            </ul>
+          </section>
+
+          {item.outcomes ? (
+            <section className="timeline-project__section">
+              <h4>{locale === 'en' ? 'Outcomes' : '업무 성과'}</h4>
+              <ul>
+                {item.outcomes[locale].map((outcome) => (
+                  <li key={outcome}>{outcome}</li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+        </div>
+
+        {item.deliverables.length > 0 ? (
+          <section className="timeline-project__deliverables">
+            <h4>{locale === 'en' ? 'Project Results' : '프로젝트 결과물'}</h4>
+            <ul className="timeline-project__deliverable-list">
+              {item.deliverables.map((deliverable, index) => (
+                <li key={`${item.id}-${deliverable.label.en}-${index}`}>
+                  {deliverable.url ? (
+                    <a
+                      className="timeline-project__deliverable-link"
+                      href={deliverable.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      <span className="timeline-project__deliverable-name">
+                        {t(deliverable.label)}
+                      </span>
+                      <span className="timeline-project__deliverable-url">
+                        {deliverable.url.replace(/^https?:\/\//, '')}
+                      </span>
+                    </a>
+                  ) : (
+                    <div className="timeline-project__deliverable-note">
+                      <span className="timeline-project__deliverable-name">
+                        {t(deliverable.label)}
+                      </span>
+                      <span className="timeline-project__deliverable-text">
+                        {deliverable.note ? t(deliverable.note) : ''}
+                      </span>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+      </div>
+    </article>
+  )
 
   const handleTabClick = (tabId: TabId) => {
     setActiveTab(tabId)
@@ -699,6 +876,21 @@ function App() {
                   : '아이디어를 실제 서비스로 구현하는 전 과정을 경험하며, 데이터와 API, 배포와 사용자 전달까지 이어지는 완성도 높은 제품을 만드는 데 집중합니다.'}
               </p>
 
+                <div className="hero-education">
+                  <p className="section-label">{locale === 'en' ? 'Education' : '학력'}</p>
+                  <div className="hero-education__body">
+                    <h2>Pennsylvania State University</h2>
+                    <p className="hero-education__line">
+                      {locale === 'en'
+                        ? 'B.S. in Computer Science · College of Engineering'
+                        : '컴퓨터공학 학사 · College of Engineering'}
+                    </p>
+                    <p className="hero-education__line hero-education__line--muted">
+                      {locale === 'en' ? 'Expected Graduation: 2026.12' : '졸업 예정: 2026.12'}
+                    </p>
+                  </div>
+                </div>
+
                 <div className="profile-list profile-list--hero">
                   {profileItems.map((item) => {
                     const key = Array.isArray(item.value) ? item.value.join('-') : item.value
@@ -763,32 +955,19 @@ function App() {
               </div>
             </article>
           </div>
+        </section>
 
-          <div className="overview-meta">
-            <article className="info-card">
-              <p className="section-label">{locale === 'en' ? 'Education' : '학력'}</p>
-              <div className="info-card__body">
-                <h2>Pennsylvania State University</h2>
-                <div className="info-card__row">
-                  <span>{locale === 'en' ? 'Major' : '전공'}</span>
-                  <strong>Computer Science</strong>
-                </div>
-                <p>College of Engineering</p>
-                <p>{locale === 'en' ? 'Expected Graduation: 2026.12' : '졸업 예정: 2026.12'}</p>
-              </div>
-            </article>
+        <section
+          ref={experienceSectionRef}
+          id="experience"
+          className="section-card section-anchor projects-section"
+        >
+          <div className="section-head">
+            <h2>{locale === 'en' ? 'Experience' : '경험'}</h2>
+          </div>
 
-            <article className="info-card">
-              <p className="section-label">{t(militaryService.title)}</p>
-              <div className="info-card__body">
-                <h2>{t(militaryService.branch)}</h2>
-                <p>
-                  {locale === 'en'
-                    ? `Duration: ${militaryService.period}`
-                    : `복무 기간: ${militaryService.period}`}
-                </p>
-              </div>
-            </article>
+          <div className="timeline-list">
+            {experienceTimeline.map((item) => renderTimelineItem(item))}
           </div>
         </section>
 
@@ -802,89 +981,7 @@ function App() {
           </div>
 
           <div className="timeline-list">
-            {projectTimeline.map((project) => (
-              <article className="timeline-project" key={project.id}>
-                <div className="timeline-project__rail">
-                  <div className="timeline-project__logo-slot">
-                    <img
-                      className="timeline-project__logo-image"
-                      src={project.logoSrc}
-                      alt={project.logoAlt}
-                      loading="lazy"
-                    />
-                  </div>
-                  <span className="timeline-project__dot" aria-hidden="true" />
-                </div>
-
-                <div className="timeline-project__body">
-                  <div className="timeline-project__meta">
-                    <div>
-                      <p className="timeline-project__org">{t(project.organization)}</p>
-                      <h3>{t(project.title)}</h3>
-                    </div>
-                    <p className="timeline-project__period">{t(project.period)}</p>
-                  </div>
-
-                  <p className="timeline-project__description">{t(project.description)}</p>
-
-                  <div className="timeline-project__sections">
-                    <section className="timeline-project__section">
-                      <h4>{locale === 'en' ? 'Key Roles' : '주요 역할'}</h4>
-                      <ul>
-                        {project.roles[locale].map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </section>
-
-                    <section className="timeline-project__section">
-                      <h4>{locale === 'en' ? 'Outcomes' : '업무 성과'}</h4>
-                      <ul>
-                        {project.outcomes[locale].map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </section>
-                  </div>
-
-                  {project.deliverables.length > 0 ? (
-                    <section className="timeline-project__deliverables">
-                      <h4>{locale === 'en' ? 'Project Results' : '프로젝트 결과물'}</h4>
-                      <ul className="timeline-project__deliverable-list">
-                        {project.deliverables.map((item, index) => (
-                          <li key={`${project.id}-${item.label.en}-${index}`}>
-                            {item.url ? (
-                              <a
-                                className="timeline-project__deliverable-link"
-                                href={item.url}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                              >
-                                <span className="timeline-project__deliverable-name">
-                                  {t(item.label)}
-                                </span>
-                                <span className="timeline-project__deliverable-url">
-                                  {item.url.replace(/^https?:\/\//, '')}
-                                </span>
-                              </a>
-                            ) : (
-                              <div className="timeline-project__deliverable-note">
-                                <span className="timeline-project__deliverable-name">
-                                  {t(item.label)}
-                                </span>
-                                <span className="timeline-project__deliverable-text">
-                                  {item.note ? t(item.note) : ''}
-                                </span>
-                              </div>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </section>
-                  ) : null}
-                </div>
-              </article>
-            ))}
+            {projectTimeline.map((project) => renderTimelineItem(project))}
           </div>
         </section>
 
